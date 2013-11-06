@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="ic_base_rpc.service.rpc" class="IC\Bundle\Base\RpcBundle\Service\RpcService">
+            <call method="setRequestService">
+                <argument type="service" id="ic_base_rpc.service.request"/>
+            </call>
+            <call method="setExecutorService">
+                <argument type="service" id="ic_base_rpc.service.executor"/>
+            </call>
+        </service>
+
+        <service id="ic_base_rpc.service.request" class="IC\Bundle\Base\RpcBundle\Service\RequestService">
+            <call method="setSerializerService">
+                <argument type="service" id="serializer"/>
+            </call>
+        </service>
+
+        <service id="ic_base_rpc.service.executor" class="IC\Bundle\Base\RpcBundle\Service\ExecutorService">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="ic_base_rpc.service.pagination" class="IC\Bundle\Base\RpcBundle\Service\PaginationService">
+            <call method="setPaginatorFactoryService">
+                <argument type="service" id="ic_base_rpc.service.paginator_factory"/>
+            </call>
+            <call method="setMaximumRecordCount">
+                <argument>500</argument>
+            </call>
+        </service>
+
+        <service id="ic_base_rpc.service.paginator_factory" class="IC\Bundle\Base\RpcBundle\Service\PaginatorFactoryService"/>
+    </services>
+
+</container>
