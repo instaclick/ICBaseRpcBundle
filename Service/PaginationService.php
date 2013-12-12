@@ -6,7 +6,7 @@
 namespace IC\Bundle\Base\RpcBundle\Service;
 
 use IC\Bundle\Base\ComponentBundle\Entity\Filter\RangedCriteriaInterface;
-use IC\Bundle\Base\RestBundle\Service\Filter\Result;
+use IC\Bundle\Base\RpcBundle\Service\Filter\Result;
 
 /**
  * Pagination Service.
@@ -53,7 +53,7 @@ class PaginationService
      * @param integer                                                $page               page number
      * @param integer                                                $maximumRecordCount result limit
      *
-     * @return \IC\Bundle\Base\RestBundle\Service\Filter\Result
+     * @return \IC\Bundle\Base\RpcBundle\Service\Filter\Result
      */
     public function paginate(RangedCriteriaInterface $criteria, $page, $maximumRecordCount)
     {
