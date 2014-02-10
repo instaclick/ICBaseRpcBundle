@@ -39,7 +39,7 @@ class PaginationService
     /**
      * Define the paginator factory service.
      *
-     * @param IC\Bundle\Base\RpcBundle\Service\PaginatorFactoryServiceInterface $paginatorFactoryService
+     * @param \IC\Bundle\Base\RpcBundle\Service\PaginatorFactoryServiceInterface $paginatorFactoryService
      */
     public function setPaginatorFactoryService(PaginatorFactoryServiceInterface $paginatorFactoryService)
     {
