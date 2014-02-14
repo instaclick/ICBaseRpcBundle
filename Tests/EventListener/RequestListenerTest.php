@@ -235,9 +235,6 @@ class RequestListenerTest extends TestCase
                 Request::create('/', 'POST'), ''
             ),
             array(
-                Request::create('/', 'POST'), 'text/plain'
-            ),
-            array(
                 Request::create('/', 'POST'), 'application/foobar'
             ),
         );
