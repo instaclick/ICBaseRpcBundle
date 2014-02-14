@@ -29,7 +29,8 @@ class RequestListener
      */
     private $preferableMimeTypeList = array(
         'application/json',
-        'application/xml'
+        'application/xml',
+        'text/plain'
     );
 
     /**
