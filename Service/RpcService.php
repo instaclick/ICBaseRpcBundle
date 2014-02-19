@@ -6,6 +6,7 @@
 namespace IC\Bundle\Base\RpcBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Rpc Service.
@@ -55,6 +56,10 @@ class RpcService
     {
         $requestData     = $this->requestService->deserializeRequest($request);
         $responseContent = $this->executorService->execute($requestData->get('service'), (array) $requestData->get('arguments'));
+
+        if ($responseContent instanceof Response) {
+            return $responseContent;
+        }
 
         return $this->requestService->createResponse($request, $responseContent);
     }
