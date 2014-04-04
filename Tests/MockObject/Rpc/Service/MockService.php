@@ -17,12 +17,13 @@ class MockService implements RpcServiceInterface
     /**
      * Execute method.
      *
-     * @param mixed $expectedParameter1
-     * @param mixed $expectedParameter2
+     * @param mixed  $expectedParameter1
+     * @param mixed  $expectedParameter2
+     * @param string $defaultParameter
      *
      * @return array
      */
-    public function execute($expectedParameter1, $expectedParameter2)
+    public function execute($expectedParameter1, $expectedParameter2, $defaultParameter = 'default')
     {
         return func_get_args();
     }

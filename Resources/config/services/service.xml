@@ -4,6 +4,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="ic_base_rpc.service.deep_filter_service" class="IC\Bundle\Base\RpcBundle\Service\DeepFilterService">
+            <call method="setFilterService">
+                <argument type="service" id="dms.filter"/>
+            </call>
+        </service>
+
         <service id="ic_base_rpc.service.rpc" class="IC\Bundle\Base\RpcBundle\Service\RpcService">
             <call method="setRequestService">
                 <argument type="service" id="ic_base_rpc.service.request"/>
@@ -22,6 +28,18 @@
         <service id="ic_base_rpc.service.executor" class="IC\Bundle\Base\RpcBundle\Service\ExecutorService">
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
+            </call>
+            <call method="setNormalizerService">
+                <argument type="service" id="ic_base_rpc.service.normalizer"/>
+            </call>
+        </service>
+
+        <service id="ic_base_rpc.service.normalizer" class="IC\Bundle\Base\RpcBundle\Service\NormalizerService">
+            <call method="setFilterService">
+                <argument type="service" id="ic_base_rpc.service.deep_filter_service"/>
+            </call>
+            <call method="setValidatorService">
+                <argument type="service" id="validator"/>
             </call>
         </service>
 

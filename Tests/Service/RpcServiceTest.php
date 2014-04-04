@@ -127,7 +127,36 @@ class RpcServiceTest extends TestCase
                 'ic_base_foobar.rpc.service.foobar',
                 array(),
                 "foobar"
-            ),
+            )
         );
+    }
+
+    /**
+     * Test execute support the service returning a response.
+     */
+    public function testExecuteSupportTheServiceReturningAResponse()
+    {
+        $request     = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $response    = $this->createMock('Symfony\Component\HttpFoundation\Response');
+        $requestData = new ArrayCollection(array(
+            'service'   => 'ic_base_foobar.rpc.service.foobar',
+            'arguments' => array('foo' => 'bar')
+        ));
+
+        $this->requestService
+            ->expects($this->once())
+            ->method('deserializeRequest')
+            ->will($this->returnValue($requestData));
+
+        $this->executorService
+            ->expects($this->once())
+            ->method('execute')
+            ->will($this->returnValue($response));
+
+        $this->requestService
+            ->expects($this->never())
+            ->method('createResponse');
+
+        $this->assertEquals($response, $this->service->execute($request));
     }
 }

@@ -4,10 +4,12 @@
  */
 namespace IC\Bundle\Base\RpcBundle\Tests\Service;
 
-use IC\Bundle\Base\TestBundle\Test\TestCase;
 use IC\Bundle\Base\RpcBundle\Service\ExecutorService;
-use IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockService;
+use IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity;
+use IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockModelService;
 use IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockSecuredService;
+use IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockService;
+use IC\Bundle\Base\TestBundle\Test\TestCase;
 
 /**
  * Executor Service Test
@@ -38,11 +40,13 @@ class ExecutorServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service              = new ExecutorService();
-        $this->containerMock        = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->authorizationService = $this->createMock('IC\Bundle\Base\SecurityBundle\Service\AuthorizationService');
+        $this->service               = new ExecutorService();
+        $this->containerMock         = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->authorizationService  = $this->createMock('IC\Bundle\Base\SecurityBundle\Service\AuthorizationService');
+        $this->normalizerServiceMock = $this->createMock('IC\Bundle\Base\RpcBundle\Service\NormalizerService');
 
         $this->service->setContainer($this->containerMock);
+        $this->service->setNormalizerService($this->normalizerServiceMock);
     }
 
     /**
@@ -54,7 +58,7 @@ class ExecutorServiceTest extends TestCase
      *
      * @dataProvider validDataProvider
      */
-    public function testExecute($serviceId, $requestData, $expectedParameterList)
+    public function testExecuteUsingRawParameterList($serviceId, $requestData, $expectedParameterList)
     {
         $this->containerMock
             ->expects($this->once())
@@ -89,7 +93,8 @@ class ExecutorServiceTest extends TestCase
                 ),
                 array(
                     0 => 'foo',
-                    1 => 'bar'
+                    1 => 'bar',
+                    2 => 'default'
                 ),
             ),
             array(
@@ -100,10 +105,81 @@ class ExecutorServiceTest extends TestCase
                 ),
                 array(
                     0 => 'foo',
-                    1 => 'bar'
+                    1 => 'bar',
+                    2 => 'default'
                 ),
             ),
         );
+    }
+
+    /**
+     * Test execute using model.
+     */
+    public function testExecuteUsingModel()
+    {
+        $serviceId   = 'service.id';
+        $requestData = array();
+        $model       = new MockEntity('foo', 845, null);
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('has')
+            ->with($this->equalTo($serviceId))
+            ->will($this->returnValue(true));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($serviceId))
+            ->will($this->returnValue(new MockModelService()));
+
+        $this->normalizerServiceMock
+            ->expects($this->once())
+            ->method('toModel')
+            ->with(
+                'IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity',
+                $requestData
+            )
+            ->will($this->returnValue($model));
+
+        $result = $this->service->execute($serviceId, $requestData);
+
+        $this->assertEquals($model, $result);
+    }
+
+    /**
+     * Test execute using model results in bad method response if unable to build model.
+     */
+    public function testExecuteUsingModelResultsInBadMethodResponseIfUnableToBuildModel()
+    {
+        $serviceId   = 'service.id';
+        $requestData = array();
+        $model       = new MockEntity('foo', 845, null);
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('has')
+            ->with($this->equalTo($serviceId))
+            ->will($this->returnValue(true));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($serviceId))
+            ->will($this->returnValue(new MockModelService()));
+
+        $this->normalizerServiceMock
+            ->expects($this->once())
+            ->method('toModel')
+            ->with(
+                'IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity',
+                $requestData
+            )
+            ->will($this->returnValue(null));
+
+        $result = $this->service->execute($serviceId, $requestData);
+
+        $this->assertEquals(400, $result->getStatusCode());
     }
 
     /**

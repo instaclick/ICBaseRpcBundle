@@ -5,8 +5,6 @@
 
 namespace IC\Bundle\Base\RpcBundle\Service;
 
-use Symfony\Component\HttpFoundation\Request;
-
 /**
  * RPC Service Interface.
  *
