@@ -293,10 +293,10 @@ class RequestListenerTest extends TestCase
     /**
      * Create the event
      *
-     * @param Symfony\Component\HttpKernel\HttpKernelInterface $kernelMock
-     * @param Symfony\Component\HttpFoundation\Request         $request
-     * @param integer                                          $requestType
-     * @param \Symfony\Component\HttpFoundation\Response       $response
+     * @param \Symfony\Component\HttpKernel\HttpKernelInterface $kernelMock
+     * @param \Symfony\Component\HttpFoundation\Request         $request
+     * @param integer                                           $requestType
+     * @param \Symfony\Component\HttpFoundation\Response        $response
      *
      * @return \Symfony\Component\HttpKernel\Event\GetResponseEvent
      */
