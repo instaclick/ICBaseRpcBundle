@@ -4,13 +4,13 @@
  */
 namespace IC\Bundle\Base\RpcBundle\Tests\Service;
 
-use IC\Bundle\Base\RpcBundle\Service\NormalizerService;
+use IC\Bundle\Base\RpcBundle\Service\ModelFactoryService;
 use IC\Bundle\Base\TestBundle\Test\TestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolation;
 
 /**
- * Normalizer service test.
+ * Model factory service test.
  *
  * @group ICBaseRpc
  * @group Service
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolation;
  *
  * @author Danilo Cabello <daniloc@nationalfibre.net>
  */
-class NormalizerServiceTest extends TestCase
+class ModelFactoryServiceTest extends TestCase
 {
     /**
      * {@inheritdoc}
@@ -27,18 +27,18 @@ class NormalizerServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->normalizerService    = new NormalizerService();
+        $this->modelFactoryService  = new ModelFactoryService();
         $this->filterServiceMock    = $this->createMock('\IC\Bundle\Base\RpcBundle\Service\DeepFilterService');
         $this->validatorServiceMock = $this->createMock('\Symfony\Component\Validator\Validator');
 
-        $this->normalizerService->setFilterService($this->filterServiceMock);
-        $this->normalizerService->setValidatorService($this->validatorServiceMock);
+        $this->modelFactoryService->setFilterService($this->filterServiceMock);
+        $this->modelFactoryService->setValidatorService($this->validatorServiceMock);
     }
 
     /**
-     * Test to model.
+     * Test create model.
      */
-    public function testToModel()
+    public function testCreateModel()
     {
         $modelClass = 'IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity';
         $argumentList = array(
@@ -61,7 +61,7 @@ class NormalizerServiceTest extends TestCase
             ->method('validate')
             ->will($this->returnValue($constraintViolationList));
 
-        $model = $this->normalizerService->toModel($modelClass, $argumentList);
+        $model = $this->modelFactoryService->createModel($modelClass, $argumentList);
 
         $this->assertEquals('Foo', $model->foo);
         $this->assertEquals(845, $model->bar);
@@ -70,9 +70,9 @@ class NormalizerServiceTest extends TestCase
     }
 
     /**
-     * Test to model with invalid input return null.
+     * Test create model with invalid input return null.
      */
-    public function testToModelWithInvalidInputReturnNull()
+    public function testCreateModelWithInvalidInputReturnNull()
     {
         $modelClass = 'IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity';
         $argumentList = array();
@@ -91,6 +91,6 @@ class NormalizerServiceTest extends TestCase
             ->method('validate')
             ->will($this->returnValue($constraintViolationList));
 
-        $this->assertNull($this->normalizerService->toModel($modelClass, $argumentList));
+        $this->assertNull($this->modelFactoryService->createModel($modelClass, $argumentList));
     }
 }

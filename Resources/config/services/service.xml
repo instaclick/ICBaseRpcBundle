@@ -29,12 +29,12 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
-            <call method="setNormalizerService">
-                <argument type="service" id="ic_base_rpc.service.normalizer"/>
+            <call method="setModelFactoryService">
+                <argument type="service" id="ic_base_rpc.service.model_factory"/>
             </call>
         </service>
 
-        <service id="ic_base_rpc.service.normalizer" class="IC\Bundle\Base\RpcBundle\Service\NormalizerService">
+        <service id="ic_base_rpc.service.model_factory" class="IC\Bundle\Base\RpcBundle\Service\ModelFactoryService">
             <call method="setFilterService">
                 <argument type="service" id="ic_base_rpc.service.deep_filter_service"/>
             </call>

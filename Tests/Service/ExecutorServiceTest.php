@@ -40,13 +40,13 @@ class ExecutorServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service               = new ExecutorService();
-        $this->containerMock         = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->authorizationService  = $this->createMock('IC\Bundle\Base\SecurityBundle\Service\AuthorizationService');
-        $this->normalizerServiceMock = $this->createMock('IC\Bundle\Base\RpcBundle\Service\NormalizerService');
+        $this->service                 = new ExecutorService();
+        $this->containerMock           = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->authorizationService    = $this->createMock('IC\Bundle\Base\SecurityBundle\Service\AuthorizationService');
+        $this->modelFactoryServiceMock = $this->createMock('IC\Bundle\Base\RpcBundle\Service\ModelFactoryService');
 
         $this->service->setContainer($this->containerMock);
-        $this->service->setNormalizerService($this->normalizerServiceMock);
+        $this->service->setModelFactoryService($this->modelFactoryServiceMock);
     }
 
     /**
@@ -133,9 +133,9 @@ class ExecutorServiceTest extends TestCase
             ->with($this->equalTo($serviceId))
             ->will($this->returnValue(new MockModelService()));
 
-        $this->normalizerServiceMock
+        $this->modelFactoryServiceMock
             ->expects($this->once())
-            ->method('toModel')
+            ->method('createModel')
             ->with(
                 'IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity',
                 $requestData
@@ -168,9 +168,9 @@ class ExecutorServiceTest extends TestCase
             ->with($this->equalTo($serviceId))
             ->will($this->returnValue(new MockModelService()));
 
-        $this->normalizerServiceMock
+        $this->modelFactoryServiceMock
             ->expects($this->once())
-            ->method('toModel')
+            ->method('createModel')
             ->with(
                 'IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service\MockEntity',
                 $requestData

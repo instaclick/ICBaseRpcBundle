@@ -9,11 +9,11 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Validator;
 
 /**
- * Normalizer service.
+ * Model factory service.
  *
  * @author Danilo Cabello <daniloc@nationalfibre.net>
  */
-class NormalizerService
+class ModelFactoryService
 {
     /**
      * @var \IC\Bundle\Base\RpcBundle\Service\DeepFilterService
@@ -46,14 +46,14 @@ class NormalizerService
     }
 
     /**
-     * Normalize an array to a model by hydrating, filtering and validating the data.
+     * Create a model from an array by hydrating, filtering and validating the data.
      *
      * @param string $modelClass
      * @param array  $argumentList
      *
      * @return array
      */
-    public function toModel($modelClass, array $argumentList)
+    public function createModel($modelClass, array $argumentList)
     {
         $model = new $modelClass();
 

@@ -27,9 +27,9 @@ class ExecutorService
     private $container;
 
     /**
-     * @var \IC\Bundle\Base\RpcBundle\Service\NormalizerService
+     * @var \IC\Bundle\Base\RpcBundle\Service\ModelFactoryService
      */
-    private $normalizerService;
+    private $modelFactoryService;
 
     /**
      * Define the container.
@@ -44,11 +44,11 @@ class ExecutorService
     /**
      * Define the normalizer service.
      *
-     * @param \IC\Bundle\Base\RpcBundle\Service\NormalizerService $normalizerService
+     * @param \IC\Bundle\Base\RpcBundle\Service\ModelFactoryService $modelFactoryService
      */
-    public function setNormalizerService(NormalizerService $normalizerService)
+    public function setModelFactoryService(ModelFactoryService $modelFactoryService)
     {
-        $this->normalizerService = $normalizerService;
+        $this->modelFactoryService = $modelFactoryService;
     }
 
     /**
@@ -127,7 +127,7 @@ class ExecutorService
     {
         $reflection = new \ReflectionMethod($service, 'execute');
         $modelClass = $service->getModel();
-        $model      = $this->normalizerService->toModel($modelClass, $argumentList);
+        $model      = $this->modelFactoryService->createModel($modelClass, $argumentList);
 
         if ($model === null) {
             return new Response('Invalid arguments.', 400);
