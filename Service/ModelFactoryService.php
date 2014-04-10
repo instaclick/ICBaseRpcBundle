@@ -5,6 +5,9 @@
 
 namespace IC\Bundle\Base\RpcBundle\Service;
 
+use Symfony\Component\PropertyAccess\Exception\NoSuchIndexException;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Validator;
 
@@ -101,6 +104,14 @@ class ModelFactoryService
             return;
         }
 
-        $accessor->setValue($model, $property, $value);
+        try {
+            $accessor->setValue($model, $property, $value);
+        } catch (NoSuchIndexException $exception) {
+            // noop
+        } catch (NoSuchPropertyException $exception) {
+            // noop
+        } catch (UnexpectedTypeException $exception) {
+            // noop
+        }
     }
 }
