@@ -20,7 +20,7 @@ use Symfony\Component\Routing\RouterInterface;
 class RequestListener
 {
     /**
-     * @var \Symfony\Component\Routing\RouterInterface The router
+     * @var \Symfony\Component\Routing\RouterInterface
      */
     private $router;
 

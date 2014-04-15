@@ -32,17 +32,17 @@ class PaginationServiceTest extends TestCase
     private $entityManagerMock;
 
     /**
-     * @var IC\Bundle\Base\RpcBundle\Service\PaginationService
+     * @var \IC\Bundle\Base\RpcBundle\Service\PaginationService
      */
     private $paginationService;
 
     /**
-     * @var Doctrine\ORM\Tools\Pagination\Paginator
+     * @var \Doctrine\ORM\Tools\Pagination\Paginator
      */
     private $paginatorMock;
 
     /**
-     * @var IC\Bundle\Base\RpcBundle\Service\PaginatorFactoryService
+     * @var \IC\Bundle\Base\RpcBundle\Service\PaginatorFactoryService
      */
     private $paginatorFactoryMock;
 
