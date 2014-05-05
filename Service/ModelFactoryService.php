@@ -96,15 +96,15 @@ class ModelFactoryService
     {
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        // If the value to be set is array and the model attribute does not hold an array we need to
-        // recurse and set the properties using property access again.
-        if (is_array($value) && ! is_array($accessor->getValue($model, $property))) {
-            $this->hydrateModel($accessor->getValue($model, $property), $value);
-
-            return;
-        }
-
         try {
+            // If the value to be set is array and the model attribute does not hold an array we need to
+            // recurse and set the properties using property access again.
+            if (is_array($value) && ! is_array($accessor->getValue($model, $property))) {
+                $this->hydrateModel($accessor->getValue($model, $property), $value);
+
+                return;
+            }
+
             $accessor->setValue($model, $property, $value);
         } catch (NoSuchIndexException $exception) {
             // noop
