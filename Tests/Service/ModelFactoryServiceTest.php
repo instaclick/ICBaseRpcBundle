@@ -48,8 +48,6 @@ class ModelFactoryServiceTest extends TestCase
                 'baz' => 'Baz',
                 'qux' => 907
             ),
-            //'garbage' => array(),
-            //'another_garbage' => 'string'
         );
 
         $this->filterServiceMock
