@@ -4,15 +4,10 @@
  */
 namespace IC\Bundle\Base\RpcBundle\Service;
 
-use DMS\Bundle\FilterBundle\Service\Filter;
-use IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface;
-use IC\Bundle\Base\RpcBundle\Service\RpcServiceModelInterface;
 use IC\Bundle\Base\SecurityBundle\Resource\SecuredResourceInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
-use Symfony\Component\Validator\Validator;
 
 /**
  * Executor Service.
@@ -56,6 +51,8 @@ class ExecutorService
      *
      * @param string $serviceId    Service id
      * @param array  $argumentList List of arguments with values
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException
      *
      * @return mixed
      */
@@ -141,6 +138,8 @@ class ExecutorService
      *
      * @param \IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface $service
      * @param array                                                 $argumentList
+     *
+     * @throws \BadMethodCallException
      *
      * @return mixed
      */
