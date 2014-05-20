@@ -25,7 +25,7 @@ class RpcService implements RpcServiceInterface, RpcServiceModelInterface, Secur
     private $model;
 
     /**
-     * @var NoteViewService
+     * @var \IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface
      */
     private $service;
 
@@ -79,7 +79,7 @@ class RpcService implements RpcServiceInterface, RpcServiceModelInterface, Secur
     }
 
     /**
-     * Execute leadService
+     * Execute service
      *
      * @param object $model
      *
