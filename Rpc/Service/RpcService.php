@@ -5,6 +5,7 @@
 
 namespace IC\Bundle\Base\RpcBundle\Rpc\Service;
 
+use IC\Bundle\Base\RpcBundle\Service\ExecutableInterface;
 use IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface;
 use IC\Bundle\Base\RpcBundle\Service\RpcServiceModelInterface;
 use IC\Bundle\Base\SecurityBundle\Resource\Permission;
@@ -43,11 +44,11 @@ class RpcService implements RpcServiceInterface, RpcServiceModelInterface, Secur
     }
 
     /**
-     * Set service
+     * Set service.
      *
-     * @param \IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface $service
+     * @param \IC\Bundle\Base\RpcBundle\Service\ExecutableInterface $service
      */
-    public function setService(RpcServiceInterface $service)
+    public function setService(ExecutableInterface $service)
     {
         $this->service = $service;
     }
