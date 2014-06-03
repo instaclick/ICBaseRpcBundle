@@ -28,7 +28,7 @@ class RpcService implements RpcServiceInterface, RpcServiceModelInterface, Secur
     /**
      * @var \IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface
      */
-    private $service;
+    protected $service;
 
     /**
      * @var string
