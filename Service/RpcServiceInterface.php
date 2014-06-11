@@ -15,5 +15,10 @@ namespace IC\Bundle\Base\RpcBundle\Service;
  */
 interface RpcServiceInterface
 {
-    /* intentionally empty */
+    /**
+     * Retrieve model class name, i.e., \IC\Foo\Bar\BazModel
+     *
+     * @return string
+     */
+    public function getModel();
 }

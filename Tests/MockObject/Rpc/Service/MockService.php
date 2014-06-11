@@ -27,4 +27,12 @@ class MockService implements RpcServiceInterface
     {
         return func_get_args();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getModel()
+    {
+        return 'Mock/Model';
+    }
 }

@@ -6,14 +6,13 @@
 namespace IC\Bundle\Base\RpcBundle\Tests\MockObject\Rpc\Service;
 
 use IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface;
-use IC\Bundle\Base\RpcBundle\Service\RpcServiceModelInterface;
 
 /**
  * Mock model service.
  *
  * @author Danilo Cabello <daniloc@nationalfibre.net>
  */
-class MockModelService implements RpcServiceInterface, RpcServiceModelInterface
+class MockModelService implements RpcServiceInterface
 {
     /**
      * Execute method.

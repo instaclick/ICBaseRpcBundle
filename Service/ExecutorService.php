@@ -53,6 +53,7 @@ class ExecutorService
      * @param array  $argumentList List of arguments with values
      *
      * @throws \Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException
+     * @throws \Exception
      *
      * @return mixed
      */
@@ -64,12 +65,7 @@ class ExecutorService
             throw new InsufficientAuthenticationException();
         }
 
-        if ($service instanceof RpcServiceModelInterface) {
-            return $this->executeUsingModel($service, $argumentList);
-        }
-
-        // TODO: Remove this option after all RPC services use the new Model option.
-        return $this->executeUsingRawParameterList($service, $argumentList);
+        return $this->executeUsingModel($service, $argumentList);
     }
 
     /**
@@ -115,12 +111,12 @@ class ExecutorService
     /**
      * Execute service using model as parameter.
      *
-     * @param \IC\Bundle\Base\RpcBundle\Service\RpcServiceModelInterface $service
-     * @param array                                                      $argumentList
+     * @param \IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface $service
+     * @param array                                                 $argumentList
      *
      * @return array
      */
-    private function executeUsingModel(RpcServiceModelInterface $service, array $argumentList)
+    private function executeUsingModel(RpcServiceInterface $service, array $argumentList)
     {
         $reflection = new \ReflectionMethod($service, 'execute');
         $modelClass = $service->getModel();
@@ -131,38 +127,5 @@ class ExecutorService
         }
 
         return $reflection->invokeArgs($service, array($model));
-    }
-
-    /**
-     * Execute service using raw parameters.
-     *
-     * @param \IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface $service
-     * @param array                                                 $argumentList
-     *
-     * @throws \BadMethodCallException
-     *
-     * @return mixed
-     */
-    private function executeUsingRawParameterList($service, array $argumentList)
-    {
-        $reflection    = new \ReflectionMethod($service, 'execute');
-        $parameterList = array();
-
-        foreach ($reflection->getParameters() as $parameter) {
-            if (isset($argumentList[$parameter->getName()])) {
-                $parameterList[] = $argumentList[$parameter->getName()];
-                continue;
-            }
-
-            if ( ! $parameter->isOptional()) {
-                throw new \BadMethodCallException(
-                    sprintf('Missing parameter [%s] to execute service [%s]', $parameter, get_class($service))
-                );
-            }
-
-            $parameterList[] = $parameter->getDefaultValue();
-        }
-
-        return $reflection->invokeArgs($service, $parameterList);
     }
 }
