@@ -7,14 +7,13 @@ namespace IC\Bundle\Base\RpcBundle\Rpc\Service;
 
 use IC\Bundle\Base\RpcBundle\Service\ExecutableInterface;
 use IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface;
-use IC\Bundle\Base\RpcBundle\Service\RpcServiceModelInterface;
 
 /**
- * Anonymous Rpc service
+ * Anonymous Rpc service filter|validates parameters through a model before delegating the execution
  *
  * @author David Maignan <davidm@nationalfibre.net>
  */
-class AnonymousRpcService implements RpcServiceInterface, RpcServiceModelInterface
+class AnonymousRpcService implements RpcServiceInterface
 {
     /**
      * @var object

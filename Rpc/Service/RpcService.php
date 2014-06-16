@@ -7,7 +7,6 @@ namespace IC\Bundle\Base\RpcBundle\Rpc\Service;
 
 use IC\Bundle\Base\RpcBundle\Service\ExecutableInterface;
 use IC\Bundle\Base\RpcBundle\Service\RpcServiceInterface;
-use IC\Bundle\Base\RpcBundle\Service\RpcServiceModelInterface;
 use IC\Bundle\Base\SecurityBundle\Resource\Permission;
 use IC\Bundle\Base\SecurityBundle\Resource\SecuredResourceInterface;
 
@@ -18,7 +17,7 @@ use IC\Bundle\Base\SecurityBundle\Resource\SecuredResourceInterface;
  *
  * @author David Maignan <davidm@nationalfibre.net>
  */
-class RpcService implements RpcServiceInterface, RpcServiceModelInterface, SecuredResourceInterface
+class RpcService implements RpcServiceInterface, SecuredResourceInterface
 {
     /**
      * @var object
