@@ -39,7 +39,7 @@ class RequestService
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return 'Doctrine\Common\Collections\ArrayCollection'
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function deserializeRequest(Request $request)
     {
